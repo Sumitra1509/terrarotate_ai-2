@@ -104,7 +104,7 @@ with tab1:
             st.plotly_chart(px.bar(chart_df,x='Year',y='Rainfall (mm)',title='Year-by-year estimated rainfall',color_discrete_sequence=['#378763']),use_container_width=True)
         monthly=df[['PRECTOTCORR','T2M_MAX']].resample('MS').agg({'PRECTOTCORR':'sum','T2M_MAX':'mean'}).reset_index()
         monthly=monthly.rename(columns={'date':'Month','PRECTOTCORR':'Monthly rainfall (mm)','T2M_MAX':'Average max temperature (°C)'})
-        st.plotly_chart(px.line(monthly,x='date',y='Monthly rainfall (mm)',title='Monthly precipitation history',color_discrete_sequence=['#2f83a6']),use_container_width=True)
+        st.plotly_chart(px.line(monthly,x='Month',y='Monthly rainfall (mm)',title='Monthly precipitation history',color_discrete_sequence=['#2f83a6']),use_container_width=True)
         flags=evidence_flags(evidence)
         if flags:
             for name,description in flags: st.warning(f'**{name}:** {description}')
