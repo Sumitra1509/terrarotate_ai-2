@@ -9,17 +9,36 @@ from terrarotate.engine import Farm, ROTATIONS, compare
 from terrarotate.intelligence import build_evidence, evidence_flags
 from terrarotate.report import build_report
 
-st.set_page_config(page_title='TerraRotate AI | Vellore', page_icon='🌱', layout='wide', initial_sidebar_state='expanded')
-st.markdown('''<style>
-.block-container{padding-top:2rem;max-width:1350px}
-[data-testid="stMetric"]{background:#f0f7ef;padding:14px;border:1px solid #d7e5d8;border-radius:12px}
-h1,h2,h3{letter-spacing:-.025em}
-.hero{padding:30px;background:linear-gradient(110deg,#123f2c,#20754e);border-radius:20px;color:white;margin-bottom:20px}
-.hero h1{color:white;margin:0;font-size:2.55rem}.hero p{color:#d6eee0;margin:8px 0 0}
-.pill{display:inline-block;background:#c9edd8;color:#124e30;border-radius:30px;padding:4px 12px;font-size:12px;font-weight:bold}
-</style>''',unsafe_allow_html=True)
+st.set_page_config(page_title='TerraRotate AI', page_icon='🌱', layout='wide', initial_sidebar_state='expanded')
+st.markdown("""
+<style>
+/* Climate metric card background */
+div[data-testid="stMetric"] {
+    background-color: #1e293b !important;
+    border: 1px solid #475569;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+/* Metric titles */
+div[data-testid="stMetricLabel"] * {
+    color: #cbd5e1 !important;
+}
+
+/* Metric values */
+div[data-testid="stMetricValue"] * {
+    color: #ffffff !important;
+}
+
+/* Metric change indicators */
+div[data-testid="stMetricDelta"] * {
+    color: #86efac !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.markdown('''<div class="hero"><span class="pill">NASA SPACE APPS · FIELD SHIFT</span><h1>🌱 TerraRotate AI</h1>
-<p>From space to soil. A Vellore pilot that turns Earth observations into transparent crop-rotation decisions.</p></div>''',unsafe_allow_html=True)
+<p>From space to soil. Any pilot that turns Earth observations into transparent crop-rotation decisions.</p></div>''',unsafe_allow_html=True)
 st.caption('Decision-support prototype · No claims of validated yield gains, groundwater depth, wind forecasts or lightning prediction')
 
 with st.sidebar:
