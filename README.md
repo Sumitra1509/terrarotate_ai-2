@@ -1,4 +1,4 @@
-# TerraRotate AI · Vellore Pilot
+# TerraRotate AI 
 
 **NASA Space Apps Challenge 2026 · Field Shift: Adapting Farms with NASA Data**
 
