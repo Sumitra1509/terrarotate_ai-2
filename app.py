@@ -72,8 +72,8 @@ with tab1:
     st.subheader('NASA POWER · Historical environmental observations')
     st.write('Choose a completed range of years and fetch actual NASA POWER gridded meteorology. This requires internet access on first use; results are cached locally.')
     c1,c2,c3=st.columns([1,1,2])
-    with c1: start_year=st.number_input('From',1981,date.today().year-2,2016,step=1)
-    with c2: end_year=st.number_input('Through',1982,date.today().year-1,2025,step=1)
+    with c1: start_year=st.number_input('From',1981,date.today().year,2016,step=1)
+    with c2: end_year=st.number_input('Through',1982,date.today().year,2025,step=1)
     with c3:
         st.write('')
         fetch=st.button('Fetch NASA observations',type='primary',use_container_width=True)

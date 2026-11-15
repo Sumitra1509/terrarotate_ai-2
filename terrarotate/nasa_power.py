@@ -8,21 +8,30 @@ import requests
 
 BASE_URL = 'https://power.larc.nasa.gov/api/temporal/daily/point'
 PARAMS = ['T2M_MAX', 'T2M_MIN', 'PRECTOTCORR', 'WS10M']
+LATEST_POWER_YEAR = date.today().year
+LATEST_POWER_DATE = date(LATEST_POWER_YEAR, 12, 31)
 
 
 def fetch_power(lat: float, lon: float, start: date, end: date, cache_dir='data/cache'):
     if not (-90 <= lat <= 90 and -180 <= lon <= 180):
         raise ValueError('Invalid coordinates')
-    if start >= end or end >= date.today():
-        raise ValueError('Choose a completed historical date range')
-    key = hashlib.sha256(f'{lat:.3f}:{lon:.3f}:{start}:{end}:{",".join(PARAMS)}'.encode()).hexdigest()[:20]
+    if start >= end:
+        raise ValueError('Choose a valid historical date range')
+    if end.year > LATEST_POWER_YEAR:
+        raise ValueError(f'NASA POWER data currently available through {LATEST_POWER_YEAR}. Choose an end date on or before {LATEST_POWER_DATE.isoformat()}.')
+
+    effective_end = min(end, date.today())
+    if effective_end < start:
+        raise ValueError('Choose a valid historical date range')
+
+    key = hashlib.sha256(f'{lat:.3f}:{lon:.3f}:{start}:{effective_end}:{",".join(PARAMS)}'.encode()).hexdigest()[:20]
     cache = Path(cache_dir) / f'power_{key}.json'
     if cache.exists():
         payload = json.loads(cache.read_text())
         source = 'NASA POWER (local cached response)'
     else:
         query = dict(latitude=lat, longitude=lon, start=start.strftime('%Y%m%d'),
-                     end=end.strftime('%Y%m%d'), parameters=','.join(PARAMS),
+                     end=effective_end.strftime('%Y%m%d'), parameters=','.join(PARAMS),
                      community='AG', format='JSON', **{'time-standard': 'UTC'})
         response = requests.get(BASE_URL, params=query, timeout=35)
         response.raise_for_status()
